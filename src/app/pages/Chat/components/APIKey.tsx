@@ -18,14 +18,10 @@ import { saveOpenAiKey } from '../utils';
 
 export function APIKey() {
   const openAiApiKey = process.env.OPENAI_API_KEY;
-  const [apiKey, setApiKey] = React.useState<string>(
-    openAiApiKey || useSelector(getOpenAiApiKey),
-  );
   const [error, setError] = React.useState<string | null>(null);
   const dispatch = useDispatch();
   const { actions } = useChatOptionsSlice();
-  const apiKeyStatus = useSelector(getOpenAiKeyStatus);
-  const apiKeyPrev = useSelector(getApiPrevKey);
+
   const model = useSelector(getModel);
 
   const { isLoading, isFetching, data, isError, refetch } = useQuery(
