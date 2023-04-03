@@ -13,7 +13,7 @@ export function getOpenAiKeyFromStorage(): string | null {
   return window.localStorage
     ? (localStorage.getItem('openAiKey') as string) || null
     : null;
-}
+} 
 
 export function saveSelectedCharacter(character: string) {
   window.localStorage && localStorage.setItem('character', character);
