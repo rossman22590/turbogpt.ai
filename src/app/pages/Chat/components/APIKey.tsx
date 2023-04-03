@@ -19,6 +19,9 @@ import { saveOpenAiKey } from '../utils';
 export function APIKey() {
   const openAiApiKey = process.env.OPENAI_API_KEY;
   const [error, setError] = React.useState<string | null>(null);
+    const [apiKey, setApiKey] = React.useState<string>(
+    openAiApiKey || useSelector(getOpenAiApiKey),
+  );
   const dispatch = useDispatch();
   const { actions } = useChatOptionsSlice();
 
