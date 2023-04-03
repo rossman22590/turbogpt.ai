@@ -18,18 +18,13 @@ import { saveOpenAiKey } from '../utils';
 
 export function APIKey() {
   const openAiApiKey = process.env.OPENAI_API_KEY;
-  const [error, setError] = React.useState<string | null>(null);
-const [apiKey, setApiKey] = React.useState<string>(
-    openAiApiKey || useSelector(),
-  );
-  const dispatch = useDispatch();
-  const { actions } = useChatOptionsSlice();
+
 
   const model = useSelector(getModel);
 
   const { isLoading, isFetching, data, isError, refetch } = useQuery(
-    'apiKey',
-    () => checkOpenAiKeyValid(apiKey, model),
+    'process.env.OPENAI_API_KEY',
+    () => checkOpenAiKeyValid(process.env.OPENAI_API_KEY, model),
     {
       enabled: false,
       refetchOnMount: false,
@@ -48,7 +43,7 @@ const [apiKey, setApiKey] = React.useState<string>(
 
   const debouncedDispatch = useCallback(
     debounce(async key => {
-      if (apiKeyStatus && apiKey && apiKey === apiKeyPrev) {
+      if (apiKeyStatus && process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY === process.env.OPENAI_API_KEY) {
         return;
       }
       dispatch(actions.setVerifyingApiKey(true));
@@ -71,24 +66,24 @@ const [apiKey, setApiKey] = React.useState<string>(
 
   // Validate OpenAI Key
   useEffect(() => {
-    if (apiKey.length === 0) {
+    if (process.env.OPENAI_API_KEY.length === 0) {
       setError(null);
       dispatch(actions.setOpenAiKeyStatus(false));
     }
-    if (apiKey) {
+    if (process.env.OPENAI_API_KEY) {
       const valid = validateOpenAiKey(apiKey);
       if (!valid) {
         setError('Invalid API Key');
         dispatch(actions.setOpenAiKeyStatus(false));
       } else {
         setError(null);
-        debouncedDispatch(apiKey);
+        debouncedDispatch(process.env.OPENAI_API_KEY);
       }
     }
-  }, [apiKey, debouncedDispatch, dispatch, model]);
+  }, [process.env.OPENAI_API_KEY, debouncedDispatch, dispatch, model]);
 
   const generateIcon = () => {
-    if (!apiKey) {
+    if (!process.env.OPENAI_API_KEY) {
       return <IconLock size={16} />;
     }
     if (isLoading || isFetching) {
