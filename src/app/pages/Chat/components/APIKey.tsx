@@ -17,8 +17,9 @@ import { useQuery } from 'react-query';
 import { saveOpenAiKey } from '../utils';
 
 export function APIKey() {
+  const openAiApiKey = process.env.OPENAI_API_KEY;
   const [apiKey, setApiKey] = React.useState<string>(
-    useSelector(getOpenAiApiKey),
+    openAiApiKey || useSelector(getOpenAiApiKey),
   );
   const [error, setError] = React.useState<string | null>(null);
   const dispatch = useDispatch();
@@ -142,7 +143,6 @@ const Wrapper = styled.div`
 const Link = styled.a`
   color: ${props => props.theme.text};
   text-decoration: underline;
-
   &:visited {
     color: ${props => props.theme.text};
   }
