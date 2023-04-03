@@ -1,9 +1,11 @@
 import { Message } from 'utils/types/injector-typings';
 import { ApiModel, CustomPrompt } from './slice/types';
 
-export function saveOpenAiKey(key: string) {
-  if (key !== '') {
-    window.localStorage && localStorage.setItem('openAiKey', key);
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+export function saveOpenAiKey() {
+  if (OPENAI_API_KEY) {
+    window.localStorage && localStorage.setItem('openAiKey', OPENAI_API_KEY);
   }
 }
 
